@@ -18,28 +18,26 @@ def create_client(request_body = Body(...)):
     
     name = request_body["name"]
     email = request_body["email"]
-    client = Client(name, email) 
+    id = request_body ["id"]
+    client = Client(name, email, id) 
     client_list.append(client)
     print(client_list)
-    pattern = r'^[a-z 0-9]+[\._]?[a-z 0-9]+[@]\w+[.]\w{2,3}$'
+    
     if check_email(email):
         return client
     else:
-        return {"message":"email inválido"}
+        return {"message":"invalid email"}
       
-  
-
-    return client
-
+ 
 def check_email(email):
     pattern = r'^[a-z 0-9]+[\._]?[a-z 0-9]+[@]\w+[.]\w{2,3}$'
-    # email = "gabrielacantarini@hotmail.com"
 
-    if re.search(pattern, email):
-        return True
-    else:
-        return False
+    return bool(re.match(pattern, email))
+   
+    ## if re.search(pattern, email):
+    ##    return True
+    ## else:
+    ##    return False
   
-    # return client
-
+ 
 #uvicorn.run(app, host="0.0.0.0", port=8080)
